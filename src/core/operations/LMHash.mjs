@@ -33,7 +33,11 @@ class LMHash extends Operation {
      * @returns {string}
      */
     run(input, args) {
-        return smbhash.lmhash(input);
+        // LM passwords are uppercased and limited to 14 bytes. Uppercasing can
+        // expand some characters (for example ß to SS), so apply the limit
+        // after case conversion before handing the value to the ntlm library.
+        const password = input.toUpperCase().slice(0, 14);
+        return smbhash.lmhash(password);
     }
 
 }

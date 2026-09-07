@@ -31,4 +31,19 @@ TestRegister.addTests([
         ],
     },
 
+    {
+        name: "LM Hash: uppercase expansion stays within 14-byte limit",
+        input: "09409aa79b41eff65fdf0c9158e4992399c360fb7f3edbbd8a3c3aede8aca3e2",
+        expectedOutput: "DF9A2F93E3C6CAC304760AA731C3F9A0",
+        recipeConfig: [
+            {
+                op: "From Hex",
+                args: ["None"],
+            },
+            {
+                op: "LM Hash",
+                args: [],
+            },
+        ],
+    },
 ]);

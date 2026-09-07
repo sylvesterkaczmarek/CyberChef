@@ -101,5 +101,20 @@ ee67303696d205ddd2b2363e8e01b4b7199a80957d94d7678eaad3fc834c5a27
                 "args": ["256", false]
             }
         ]
-    }
+    },
+    {
+        name: "Generate all hashes: binary input with expanding uppercase character",
+        input: "09409aa79b41eff65fdf0c9158e4992399c360fb7f3edbbd8a3c3aede8aca3e2",
+        expectedMatch: /SHA2 256:\s+bf661921f1e10b8512ea0b12449139007f7ed5c6fa90fbdc5c415df7f751353c[\s\S]*LM Hash:\s+DF9A2F93E3C6CAC304760AA731C3F9A0/,
+        recipeConfig: [
+            {
+                op: "From Hex",
+                args: ["None"],
+            },
+            {
+                op: "Generate all hashes",
+                args: ["All", true],
+            },
+        ],
+    },
 ]);
