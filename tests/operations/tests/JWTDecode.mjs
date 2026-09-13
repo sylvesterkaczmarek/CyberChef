@@ -14,7 +14,24 @@ const outputObject = JSON.stringify({
     iat: 1
 }, null, 4);
 
+const headerOutputObject = JSON.stringify({
+    alg: "RS256",
+    typ: "JWT",
+    x5c: ["MIIBFAKECERT"]
+}, null, 4);
+
 TestRegister.addTests([
+    {
+        name: "JWT Decode: Header with x5c",
+        input: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsIng1YyI6WyJNSUlCRkFLRUNFUlQiXX0.eyJzdWIiOiJhbGljZSIsImlhdCI6MX0.signature",
+        expectedOutput: headerOutputObject,
+        recipeConfig: [
+            {
+                op: "JWT Decode",
+                args: ["Header"],
+            }
+        ],
+    },
     {
         name: "JWT Decode: HS",
         input: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdHJpbmciOiJTb21lU3RyaW5nIiwiTnVtYmVyIjo0MiwiaWF0IjoxfQ.0ha6-j4FwvEIKPVZ-hf3S_R9Hy_UtXzq4dnedXcUrXk",

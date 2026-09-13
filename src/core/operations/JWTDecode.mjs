@@ -21,11 +21,17 @@ class JWTDecode extends Operation {
 
         this.name = "JWT Decode";
         this.module = "Crypto";
-        this.description = "Decodes a JSON Web Token <b>without</b> checking whether the provided secret / private key is valid. Use 'JWT Verify' to check if the signature is valid as well.";
+        this.description = "Decodes the payload or header of a JSON Web Token <b>without</b> checking whether the provided secret / private key is valid. Header output includes fields such as <code>x5c</code> certificate chains. Use 'JWT Verify' to check if the signature is valid as well.";
         this.infoURL = "https://wikipedia.org/wiki/JSON_Web_Token";
         this.inputType = "string";
         this.outputType = "JSON";
-        this.args = [];
+        this.args = [
+            {
+                "name": "Output",
+                "type": "option",
+                "value": ["Payload", "Header"]
+            }
+        ];
         this.checks = [
             {
                 pattern: "^ey([A-Za-z0-9_-]+)\\.ey([A-Za-z0-9_-]+)\\.([A-Za-z0-9_-]+)$",
@@ -47,7 +53,8 @@ class JWTDecode extends Operation {
                 complete: true
             });
 
-            return decoded.payload;
+            const [output] = args;
+            return output === "Header" ? decoded.header : decoded.payload;
         } catch (err) {
             throw new OperationError(err);
         }
